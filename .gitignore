@@ -1,0 +1,9 @@
+*.DS_Store
+*.suo
+*.user
+cov.xml
+coverage.xml
+test-results.xml
+coverage/*
+run.ps1
+docs/*.html

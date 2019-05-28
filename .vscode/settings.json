@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "*.workflow": "hcl",
-        ".shellcheckrc": "ini"
-    }
+        ".shellcheckrc": "ini",
+        "powershell-module.yml": "azure-pipelines"
+    },
+    "cSpell.words": [
+        "LASTEXITCODE"
+    ]
 }

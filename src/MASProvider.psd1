@@ -29,6 +29,7 @@
         './commands/Show-AppStorePackage.ps1',
         './commands/Uninstall-Package.ps1',
         './helpers/Get-AppStoreApps.ps1',
+        './helpers/Install-AppStoreApp.ps1',
         './helpers/Search-AppStore',
         './macOS/signin.applescript'
         './utils/parseListResults.awk',

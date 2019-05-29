@@ -29,7 +29,7 @@ end requestPermissionsToInstall
 on run
   set HOMEBREW_INSTALLED to ensureHomebrewIsInstalled() as boolean
   if HOMEBREW_INSTALLED is equal to true then return
-  tell application "Finder" to set SCRIPT_PATH to get the (POSIX path of (container of (path to me) as alias)) & "scripts/deps.sh" as string
+  tell application "Finder" to set SCRIPT_PATH to get the (POSIX path of (container of (path to me) as alias)) & "deps.sh" as string
   set CURRENT_USER to (system attribute "USER") as string
   set INSTALL_PERMITTED to requestPermissionsToInstall() as boolean
   if CURRENT_USER is equal to "root" then

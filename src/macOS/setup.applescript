@@ -19,7 +19,7 @@ on ensureHomebrewIsInstalled()
 end ensureHomebrewIsInstalled
 
 on requestPermissionsToInstall()
-  set permissionGranted to display dialog Â
+  set permissionGranted to display dialog Â¬
     "Install Homebrew?" buttons { "No", "Yes" }
   if permissionGranted's button returned is equal to "No" then return false
   if permissionGranted's button returned is equal to "Yes" then return true
@@ -38,8 +38,8 @@ on run
   if INSTALL_PERMITTED is equal to true then
     do shell script "sh " & SCRIPT_PATH
   else
-    set alert to display alert Â
-      "Please install Homebrew manually" buttons {"Cancel", "Ok, take me there"} as warning Â
+    set alert to display alert Â¬
+      "Please install Homebrew manually" buttons {"Cancel", "Ok, take me there"} as warning Â¬
       default button "Cancel" cancel button "Cancel" giving up after 3
     if alert's button returned is equal to "Ok, take me there" then
       open location "https://brew.sh"

@@ -1,0 +1,4 @@
+brew "mas"
+cask "powershell"
+
+# vim: set filetype=ruby

@@ -21,7 +21,7 @@ trim_trailing_whitespace = true
 [*.{ps1xml,props,xml,yaml}]
 indent_size = 2
 
-[*.applescript]
+[*.{applescript,sh}]
 indent_size = 2
 
 # vim: set filetype=dosini #

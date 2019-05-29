@@ -2,7 +2,8 @@
     "files.associations": {
         "*.workflow": "hcl",
         ".shellcheckrc": "ini",
-        "powershell-module.yml": "azure-pipelines"
+        "powershell-module.yml": "azure-pipelines",
+        "Brewfile": "ruby"
     },
     "cSpell.words": [
         "LASTEXITCODE"

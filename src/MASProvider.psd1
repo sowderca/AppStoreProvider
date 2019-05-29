@@ -31,7 +31,9 @@
         './helpers/Get-AppStoreApps.ps1',
         './helpers/Install-AppStoreApp.ps1',
         './helpers/Search-AppStore',
-        './macOS/signin.applescript'
+        './macOS/signin.applescript',
+        './macOS/setup.applescript',
+        './macOS/deps.sh',
         './utils/parseListResults.awk',
         './utils/parseSearchResults.awk'
     )

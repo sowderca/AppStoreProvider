@@ -19,7 +19,7 @@ on ensureHomebrewIsInstalled()
 end ensureHomebrewIsInstalled
 
 on requestPermissionsToInstall()
-  set permissionGranted to display dialog ¬
+  set permissionGranted to display dialog ¬¨
     "Install Homebrew?" buttons { "No", "Yes" }
   if permissionGranted's button returned is equal to "No" then return false
   if permissionGranted's button returned is equal to "Yes" then return true
@@ -29,7 +29,7 @@ end requestPermissionsToInstall
 on run
   set HOMEBREW_INSTALLED to ensureHomebrewIsInstalled() as boolean
   if HOMEBREW_INSTALLED is equal to true then return
-  tell application "Finder" to set SCRIPT_PATH to get the (POSIX path of (container of (path to me) as alias)) & "deps.sh" as string
+  tell application "Finder" to set SCRIPT_PATH to get the (POSIX path of (container of (path to me) as alias)) & "scripts/deps.sh" as string
   set CURRENT_USER to (system attribute "USER") as string
   set INSTALL_PERMITTED to requestPermissionsToInstall() as boolean
   if CURRENT_USER is equal to "root" then
@@ -38,8 +38,8 @@ on run
   if INSTALL_PERMITTED is equal to true then
     do shell script "sh " & SCRIPT_PATH
   else
-    set alert to display alert ¬
-      "Please install Homebrew manually" buttons {"Cancel", "Ok, take me there"} as warning ¬
+    set alert to display alert ¬¨
+      "Please install Homebrew manually" buttons {"Cancel", "Ok, take me there"} as warning ¬¨
       default button "Cancel" cancel button "Cancel" giving up after 3
     if alert's button returned is equal to "Ok, take me there" then
       open location "https://brew.sh"

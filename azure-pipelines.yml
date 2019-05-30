@@ -1,0 +1,29 @@
+---
+pool:
+    vmImage: 'windows-2019'
+
+variables:
+  MAJOR: 1
+  MINOR: 1
+
+trigger:
+  batch: 'false'
+  branches:
+    include: [master]
+  paths:
+    exclude: [README.md, .editorconfig, .gitignore, .gitattributes, .yamllint, .markdownlint.json, .shellcheckrc]
+
+
+name: $(Major).$(Minor).$(rev:r)
+
+steps:
+  - checkout: self
+    persistCredentials: 'true'
+
+  - template: '.azure-pipelines/powershell-module.yml'
+    parameters:
+      CODE_ANALYSIS: true
+      PESTER_TESTS: true
+      REQUIRED_POWERSHELL_MODULES: ''
+      POWERSHELL_MODULE_NAME: 'AppStoreProvider'
+      PUBLISH_DOCUMENTATION: true

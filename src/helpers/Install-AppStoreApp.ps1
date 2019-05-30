@@ -57,17 +57,22 @@ function Install-AppStoreApp {
         [Alias('ReInstall')]
         [switch] $Force
     );
-    Write-Information -MessageData "`e[94mINFORMATION: Installing application with ID: $($ID)... `e[0m" -Tags @('Operation');
-    [string] $result = 'An error was encountered installing the application';
-    if ($Force.IsPresent) {
-        Write-Verbose -Message "Forcing a reinstall of application with ID: $($ID)";
-        &mas install $ID --force *>&1 | Tee-Object -Variable 'result' | Out-Null;
-    } else {
-        &mas install $ID *>&1 | Tee-Object -Variable 'result' | Out-Null;
-    }
-    if ($LASTEXITCODE -eq 1) {
-        throw $result;
-    } else {
-        Write-Information -MessageData "`e94mINFORMATION: $($result) `e[0m" -Tags @('Status')
+    begin {
+        Write-Information -MessageData "`e[94mINFORMATION: Installing application with ID: $($ID)... `e[0m" -Tags @('Status');
+    } process {
+        [string] $result = 'An error was encountered installing the application';
+        if ($Force.IsPresent) {
+            Write-Warning -Message "Forcing a reinstall of application with ID: $($ID)";
+            &mas install $ID --force *>&1 | Tee-Object -Variable 'result' | Out-Null;
+        } else {
+            &mas install $ID *>&1 | Tee-Object -Variable 'result' | Out-Null;
+        }
+        if ($LASTEXITCODE -eq 1) {
+            Write-Error -Message $result;
+        } else {
+            Write-Information -MessageData "`e94mINFORMATION: $($result) `e[0m" -Tags @('Operation')
+        }
+    } end {
+        Write-Information -MessageData "`e94mINFORMATION: completed application installations...`e[0m" -Tags @('Status')
     }
 }

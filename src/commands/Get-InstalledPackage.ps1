@@ -1,22 +1,21 @@
 #!/usr/bin/env pwsh
 #Requires -Version 6
-#Requires -Modules PackageManagement
 
 using namespace System;
 
-Import-Module 'PackageManagement';
+Set-StrictMode -Version 'Latest';
 
 <#
 .Synopsis
- Searches the App Store for an application
+ Returns the name of the provider
 .Description
- Searches the App Store for an application using mas and returns the results.
+ OneGet required function
 .Inputs
- None. You can't pipe objects to Initialize-Provider
+ None.
 .Outputs
- System.Void
+ System.String
 .Example
- Find-Package -Name 'XCode' -Provider 'AppStore'
+ Get-PackageProviderName
 .Link
  https://github.com/sowderca/MASProvider
 .Link
@@ -31,7 +30,7 @@ Import-Module 'PackageManagement';
  User
 .Notes
 #>
-function Find-Package {
+function Get-Package {
     [CmdletBinding(
         SupportsPaging = $false,
         RemotingCapability = 'PowerShell',
@@ -40,7 +39,7 @@ function Find-Package {
     )]
     [OutputType([Microsoft.PackageManagement.Packaging.SoftwareIdentity[]])]
     param(
-        [Parameter(Mandatory = $true, HelpMessage = 'Name of the package to search for')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Name of the package to search for')]
         [ValidateNotNullOrEmpty()]
         [string] $Name,
 
@@ -53,11 +52,15 @@ function Find-Package {
         [Parameter(Mandatory = $false, HelpMessage = 'Not used by the App Store provider')]
         [string] $MaximumVersion
     );
-    $results = Search-AppStore -AppName $Name | ForEach-Object {
+    $results = Get-AppStoreApps | ForEach-Object {
         if ($request -and $request.IsCanceled) {
             return;
         }
         New-SoftwareIdentity -fastPackageReference "$($_.App)|#|$($_.Version)|#|$($_.ID)" -name $_.App -version "$($_.Version)" -versionScheme 'MultiPartNumeric' -source 'App Store' -summary $_.ID;
     };
-    return $results;
+    if ($Name) {
+        return ($results | Where-Object { $_.Name -like "*$($Name)*" });
+    } else {
+        return $results;
+    }
 }

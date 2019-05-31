@@ -68,11 +68,17 @@ function Install-AppStoreApp {
             &mas install $ID *>&1 | Tee-Object -Variable 'result' | Out-Null;
         }
         if ($LASTEXITCODE -eq 1) {
-            Write-Error -Message $result;
+            if ($result -match 'Error:') {
+                Write-Error -Message $result;
+            } elseif ($result -match 'Warning:') {
+                Write-Warning -Message $result;
+            } else {
+                Write-Information -MessageData "`e[31m$($result | Out-String)`e[0m" -Tags @('Status') -InformationAction 2;
+            }
         } else {
-            Write-Information -MessageData "`e94mINFORMATION: $($result) `e[0m" -Tags @('Operation')
+            Write-Information -MessageData "`e[94mINFORMATION: $($result) `e[0m" -Tags @('Operation')
         }
     } end {
-        Write-Information -MessageData "`e94mINFORMATION: completed application installations...`e[0m" -Tags @('Status')
+        Write-Information -MessageData "`e[94mINFORMATION: completed application installations...`e[0m" -Tags @('Status')
     }
 }

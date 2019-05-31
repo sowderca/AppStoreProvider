@@ -31,12 +31,14 @@
         './commands/Initialize-Provider.ps1',
         './commands/Install-Package.ps1',
         './commands/Uninstall-Package.ps1',
+        './helpers/ConvertFrom-FastPackageReference.ps1',
         './helpers/Get-AppStoreApps.ps1',
         './helpers/Install-AppStoreApp.ps1',
         './helpers/Search-AppStore',
-        './macOS/signin.applescript',
-        './macOS/setup.applescript',
+        './helpers/Uninstall-AppStoreApp.ps1',
         './macOS/deps.sh',
+        './macOS/setup.applescript',
+        './macOS/signin.applescript',
         './utils/parseListResults.awk',
         './utils/parseSearchResults.awk'
     )
@@ -45,7 +47,7 @@
             'AppStoreProvider.psm1'
         )
         PSData                     = @{
-            Tags         = @('PackageManagement', 'Provider')
+            Tags         = @('PackageManagement', 'Provider', 'OneGet', 'macOS')
             LicenseUri   = 'MIT'
             ProjectUri   = 'https://github.com/sowderca/MASProvider'
             ReleaseNotes = ''

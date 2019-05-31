@@ -48,7 +48,7 @@ function Install-Package {
         [string] $FastPackageReference
     );
     begin {
-        Write-Information -MessageData 'Starting application installations' -Tags @('Status');
+        Write-Information -MessageData "`e[94mINFORMATION: Starting application installations...`e[0m" -Tags @('Status');
         [bool] $forceReinstall = $false;
         if ($options -and $options.ContainsKey('Force')) {
             Write-Warning -Message 'Reinstalling requested applications';
@@ -56,22 +56,19 @@ function Install-Package {
         }
     } process {
         try {
-            [string[]] $metadata = $FastPackageReference.Split('|#|', [StringSplitOptions]::None);
-            [string] $name = $metadata[0];
-            [version] $version = [version]::Parse($metadata[1]);
-            [int] $id = [int]::Parse($metadata[2]);
+            [PSCustomObject] $package = ConvertFrom-FastPackageReference -FastPackageReference $FastPackageReference;
             if ($forceReinstall) {
-                Write-Verbose -Message "Re-installing $($name)";
-                Install-AppStoreApp -ID $id -Force;
-                Write-Information -MessageData "Installed $($name) v$($version)" -Tags @('Status');
+                Write-Verbose -Message "Re-installing $($package.Name)";
+                Install-AppStoreApp -ID $package.ID -Force;
+                Write-Information -MessageData "`e[94mINFORMATION: Installed $($package.Name) v$($package.Version.ToString())...`e[0m" -Tags @('Status');
             } else {
-                Install-AppStoreApp -ID $id;
-                Write-Information -MessageData "Installed $($name) v$($version)" -Tags @('Status');
+                Install-AppStoreApp -ID $package.ID;
+                Write-Information -MessageData "`e[94mINFORMATION: Installed $($package.Name) v$($package.Version.ToString())...`e[0m" -Tags @('Status');
             }
         } catch {
             Write-Error $_;
         }
     } end {
-        Write-Information -MessageData 'Completed application installations' -Tags @('Status');
+        Write-Information -MessageData "`e[94INFORMATION: Completed application installations...`e[0m" -Tags @('Status');
     }
 }

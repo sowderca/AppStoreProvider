@@ -44,13 +44,13 @@ function Initialize-Provider {
     )]
     [OutputType([void])]
     param();
-    Write-Information -MessageData 'Initializing Mac App Store Provider' -Tags @('Operation');
+    Write-Information -MessageData "`e[94mINFORMATION: Initializing Mac App Store Provider...`e[0m" -Tags @('Operation');
     if (!(Get-Command -CommandType 'Application' -Name '*mas*') -as [bool]) {
         Write-Verbose -Message 'Bootstrapping provider with Homebrew & mas';
         &osascript -l 'AppleScript' "$(Split-Path -Path $PSScriptRoot -Parent)/macOS/setup.applescript";
     }
     if ($null -eq (&mas account | Out-String)) {
-        Write-Information 'Not authenticated with the App Store' -Tags @('Status');
+        Write-Information "`e[94mINFORMATION: Not authenticated with the App Store...`e[0m" -Tags @('Status');
         Write-Verbose -Message 'Attempting to login to the app store';
         [PSCredential] $credentials = Get-Credential -Message 'Please login to the App Store' -Title 'AppleID';
         [IntPtr] $BSTR = [Marshal]::SecureStringToBSTR($credentials.Password);
@@ -63,5 +63,5 @@ function Initialize-Provider {
             [Marshal]::FreeBSTR($pointerToPassword);
         }
     }
-    Write-Information -MessageData 'App Store provider initialized' -Tags @('Status');
+    Write-Information -MessageData "`e[94mINFORMATION: App Store provider initialized...`e[0m" -Tags @('Status');
 }
